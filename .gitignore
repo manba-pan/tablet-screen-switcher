@@ -1,0 +1,42 @@
+# Generated binaries and packages
+*.exe
+*.dll
+*.pdb
+*.zip
+*.tmp
+/releases/
+/bin/
+/obj/
+
+# Generated aliases; the primary .NET config is source-controlled.
+/*.exe.config
+!/TabletScreenSwitcher.exe.config
+
+# Local settings, diagnostics, recordings, and personal device data
+/*.json
+*smoke*.json
+*verification*.json
+demo-guard*
+*.log
+*.bak
+*.user
+*.suo
+/.env
+/.env.*
+/backups/
+/reports/
+/demo-frames/
+/*frames/
+/*.png
+/*.gif
+/SHA256SUMS.txt
+
+# Curated documentation images are public source assets.
+!/docs/*.png
+!/docs/*.gif
+
+# Editor and Python cache files
+/.vs/
+/.vscode/
+__pycache__/
+*.pyc

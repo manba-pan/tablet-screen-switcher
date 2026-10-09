@@ -1,0 +1,45 @@
+name: Windows build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Build application
+        run: .\build.ps1
+      - name: Test core and subprocess integration
+        run: .\test.ps1
+      - name: Test interactive demo and isolation
+        run: .\test-demo.ps1
+      - name: Test standalone release and renamed demo
+        run: .\test-release.ps1
+      - name: Package Windows release
+        run: .\package.ps1 -SkipBuild
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PenBridge-Windows-${{ github.run_number }}
+          path: |
+            releases/PenBridge.exe
+            releases/PenBridge-Demo.exe
+            releases/PenBridge-*-Windows.zip
+            releases/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14
